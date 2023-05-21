@@ -5,24 +5,38 @@
 #' @param bounding_shapefile_path path Where the boundary shapefile of the area are stored
 #'
 #' @description
-#' This function erform these operations: (1) load as a raster collection, (2) select dataset,
+#' This function perform these operations: (1) load as a raster collection, (2) select dataset,
 #' (3) reproject raster into boundary's CRS, (4) crop raster, (5) mask raster
 #' Although the produced raster is a cropped then masked raster, henceforth,
 #' it is called cropped raster for clarifty purpose.
 #' It will return all the MODIS files cropped and reprojected.
 #' The plot of the first file is just the file example.
 #'
+#' To run this function, you have to prepare the directory for results following in the example
+#'
 #'
 #' @return modis_cropped_rasters
 #' @export
 #'
 #' @examples
+#' (require)library(terra)
+#' (require)library(tidyverse)
+#' (require)library(MASS)
+#' (require)library(ggalluvial)
+#' (require)library(rgdal)
+#' (require)library(dplyr)
+#'
+#' #Make directory for results
+#' dir.create("../Results_example")
+#' dir.create("../Results_example/Files")
+#'
 #' modis_cropped_rasters = Load_reproject_crop_MODIS(modis_database_path, dataset_selected = "LC_Type1", bounding_shapefile_path)
 #'
 Load_reproject_crop_MODIS = function(modis_database_path,
                                      dataset_selected = "LC_Type1",
                                      bounding_shapefile_path){
   # Load shapefile and its CRS (coordinate system)
+  bounding_shapefile = readOGR(bounding_shapefile_path)
   bounding_shapefile = vect(bounding_shapefile_path)
   plot(bounding_shapefile)
   bounding_shapefile_crs = crs(bounding_shapefile)

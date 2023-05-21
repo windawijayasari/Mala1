@@ -1,12 +1,33 @@
-#' Title
+#' Title Load Global Surface Water (JRC) data
 #'
 #' @param jcr_database_path = write path where the jcr data store
 #' @param bounding_shapefile_path = write path where the jcr data store
+#'
+#' @description
+#' This function perform these operations: (1) load as a raster collection,
+#' (2) reproject raster into boundary's CRS, (3) crop raster follow the same resolution with MODIS data, (4) mask raster
+#' Although the produced raster is a cropped then masked raster, henceforth,
+#' it is called cropped raster for clarifty purpose.
+#' It will return all the JRC files cropped and reprojected.
+#' The plot of the first file is just the file example.
+#'
+#' To run this function, you have to prepare the directory for results following in the example if the directory not prepare in advance.
 #'
 #' @return jcr_cropped_500
 #' @export
 #'
 #' @examples
+#' (require)library(terra)
+#' (require)library(tidyverse)
+#' (require)library(MASS)
+#' (require)library(ggalluvial)
+#' (require)library(rgdal)
+#' (require)library(dplyr)
+#'
+#' #Make directory for results
+#' dir.create("../Results_example")
+#' dir.create("../Results_example/Files")
+#'
 #' jcr_cropped_500 = Load_jcr_raster(jcr_database_path,bounding_shapefile_path)
 #'
 Load_jcr_raster = function(jcr_database_path,

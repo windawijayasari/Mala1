@@ -2,7 +2,7 @@
 % Please edit documentation in R/Load_reproject_crop_MODIS.R
 \name{Load_reproject_crop_MODIS}
 \alias{Load_reproject_crop_MODIS}
-\title{Load_reproject_crop_MODIS}
+\title{Title Load_reproject_crop_MODIS}
 \usage{
 Load_reproject_crop_MODIS(
   modis_database_path,
@@ -11,15 +11,37 @@ Load_reproject_crop_MODIS(
 )
 }
 \arguments{
-\item{bounding_shapefile_path}{}
+\item{modis_database_path}{path Where all files from MODIS satellite data are stored}
+
+\item{dataset_selected}{type of MODIS dataset, in this case LC_type1}
+
+\item{bounding_shapefile_path}{path Where the boundary shapefile of the area are stored}
 }
 \value{
-modis cropped raster
+modis_cropped_rasters
 }
 \description{
-Load_reproject_crop_MODIS
+This function perform these operations: (1) load as a raster collection, (2) select dataset,
+(3) reproject raster into boundary's CRS, (4) crop raster, (5) mask raster
+Although the produced raster is a cropped then masked raster, henceforth,
+it is called cropped raster for clarifty purpose.
+It will return all the MODIS files cropped and reprojected.
+The plot of the first file is just the file example.
+
+To run this function, you have to prepare the directory for results following in the example
 }
 \examples{
-modis_cropped_rasters = Load_reproject_crop_MODIS(modis_database_path, dataset_selected, bounding_shapefile_path)
+(require)library(terra)
+(require)library(tidyverse)
+(require)library(MASS)
+(require)library(ggalluvial)
+(require)library(rgdal)
+(require)library(dplyr)
+
+#Make directory for results
+dir.create("../Results_example")
+dir.create("../Results_example/Files")
+
+modis_cropped_rasters = Load_reproject_crop_MODIS(modis_database_path, dataset_selected = "LC_Type1", bounding_shapefile_path)
 
 }
